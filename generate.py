@@ -1,11 +1,47 @@
+import math
 import os
 import re
 
-SRC_PATH = os.path.join("Core", "Src")
-MAIN_PATH = os.path.join(SRC_PATH, "main.c")
+import numpy as np
 
-# custom defines for the codegen
-GLOBAL_DEFS = {"SIN_PERIODS_PER_REV": 1, "HALL_PERIODS_PER_REV": 20, "OFFSET": 0}
+SRC_PATH = os.path.join("Core", "Src")
+INCLUDE_PATH = os.path.join("Core", "Inc")
+MAIN_PATH = os.path.join(SRC_PATH, "main.c")
+LUT_HEADER_PATH = os.path.join(INCLUDE_PATH, "atan_lut.h")
+GLOBAL_DEFS = {
+    "SIN_PERIODS_PER_REV": 1,
+    "HALL_PERIODS_PER_REV": 20,
+    "OFFSET": 0,
+    "LUT_SIZE": 2048,
+    "ADC_MAX": 2 ^ 12 - 1,
+    "ADC_MIN": 0,
+}
+
+
+def generate_atan2_lut(size):
+    lut = np.zeros(size)
+    for i in range(size):
+        r = i / (size - 1)
+        lut[i] = math.atan(r)
+    return lut
+
+
+def save_lut_to_header(lut, filename, size):
+    header_content = "#ifndef ATAN2_LUT_H\n"
+    header_content += "#define ATAN2_LUT_H\n\n"
+    header_content += "// Generated LUT for atan2 with {size} entries\n"
+    header_content += f"const float ATAN_LUT[{size}] = {{\n"
+    for _, value in enumerate(lut):
+        header_content += f"    {value:.8f},\n"
+    header_content += "};\n\n"
+    header_content += "#endif // ATAN2_LUT_H\n"
+    with open(filename, "w") as f:
+        f.write(header_content)
+
+
+def print_lut(lut):
+    for i, value in enumerate(lut):
+        print(f"Index {i}: {value} radians")
 
 
 def replace_string(pattern: str, replacement_string: str):
@@ -48,8 +84,9 @@ def array_to_c(array: list):
 
 def main():
     const_to_c(GLOBAL_DEFS)
-    test_array = [1, 2, 3]
-    array_to_c(test_array)
+    lut = generate_atan2_lut(GLOBAL_DEFS["LUT_SIZE"])
+    save_lut_to_header(lut, LUT_HEADER_PATH, GLOBAL_DEFS["LUT_SIZE"])
+    print_lut(lut[:10])
 
 
 if __name__ == "__main__":

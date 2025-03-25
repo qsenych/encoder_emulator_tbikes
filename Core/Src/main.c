@@ -24,7 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "atan_lut.h"
+#include "math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -37,6 +38,9 @@
 #define SIN_PERIODS_PER_REV 1
 #define HALL_PERIODS_PER_REV 20
 #define OFFSET 0
+#define LUT_SIZE 2048
+#define ADC_MAX 9
+#define ADC_MIN 0
 
 /* USER CODE END PD */
 
@@ -152,7 +156,25 @@ void SystemClock_Config(void) {
 }
 
 /* USER CODE BEGIN 4 */
-
+static float fast_atan2(uint16_t ADC_C, uint16_t ADC_S) {
+  const float midpoint = (ADC_MAX + ADC_MIN) / 2.0f;
+  float num = ADC_C - midpoint;
+  float den = ADC_S - midpoint;
+  if (den == 0)
+    return (num >= 0) ? 0 : M_PI;
+  float r = fabs(num / den);
+  int index = (int)(r * 1023.0f);
+  float theta = ATAN_LUT[index];
+  float next_theta = ATAN_LUT[index + 1];
+  theta += (r - (index / 1023.0f)) * (next_theta - theta);
+  if (num > den)
+    theta = M_PI_2 - theta;
+  if (num < 0 && den > 0)
+    return M_PI + theta;
+  if (den < 0)
+    return M_PI - theta;
+  return theta;
+}
 /* USER CODE END 4 */
 
 /**
