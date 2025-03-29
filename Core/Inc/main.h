@@ -58,7 +58,13 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 #define DEBUG_LED_Pin GPIO_PIN_13
-#define DEBUG_LED_GPIO_Port GPIOA
+#define DEBUG_LED_GPIO_Port GPIOC
+#define HALL_A_Pin GPIO_PIN_3
+#define HALL_A_GPIO_Port GPIOB
+#define HALL_B_Pin GPIO_PIN_5
+#define HALL_B_GPIO_Port GPIOB
+#define HALL_C_Pin GPIO_PIN_7
+#define HALL_C_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 
