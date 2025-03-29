@@ -12,9 +12,9 @@ GLOBAL_DEFS = {
     "SIN_PERIODS_PER_REV": 1,
     "HALL_PERIODS_PER_REV": 20,
     "OFFSET": 0,
-    "LUT_SIZE": 2048,
-    "ADC_MAX": 2 ^ 12 - 1,
-    "ADC_MIN": 0,
+    "LUT_SIZE": 1024,
+    "ADC_MAX": 4012.855,  # 4.1 * 5.6 / (1.5 + 5.6) / 3.3 * (2 ^ 12 - 1),
+    "ADC_MIN": 880.87,  # 0.9 * 5.6 / (1.5 + 5.6) / 3.3 * (2 ^ 12 - 1),
 }
 
 

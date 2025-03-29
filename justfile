@@ -1,9 +1,12 @@
-alias g := generate
-alias b := build
+# build using make - debugging enabled
 build:
-  make -j$(nproc)
+ make clean
+ make -j17
 
-generate:
-  python generate.py
-  clang-format Core/Src/main.c -i
+# flash using pyocd
+flash:
+	pyocd flash -t STM32F103C6 build/sin2cos2.hex
 
+# generate documentation using doxygen
+docs:
+  doxygen
