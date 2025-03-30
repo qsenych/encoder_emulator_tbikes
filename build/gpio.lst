@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   30:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
   31:Core/Src/gpio.c **** /* USER CODE BEGIN 1 */
   32:Core/Src/gpio.c **** 
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 2
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 2
 
 
   33:Core/Src/gpio.c **** /* USER CODE END 1 */
@@ -99,7 +99,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   51              	.LBB2:
   52              		.loc 1 43 3 view .LVU4
   53              		.loc 1 43 3 view .LVU5
-  54 0010 204B     		ldr	r3, .L3
+  54 0010 254B     		ldr	r3, .L3
   55 0012 9A69     		ldr	r2, [r3, #24]
   56 0014 42F01002 		orr	r2, r2, #16
   57 0018 9A61     		str	r2, [r3, #24]
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   69              		.loc 1 44 3 view .LVU11
   70 0024 9A69     		ldr	r2, [r3, #24]
   71 0026 42F00402 		orr	r2, r2, #4
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 3
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 3
 
 
   72 002a 9A61     		str	r2, [r3, #24]
@@ -150,7 +150,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   47:Core/Src/gpio.c ****   /*Configure GPIO pin Output Level */
   48:Core/Src/gpio.c ****   HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, GPIO_PIN_RESET);
   96              		.loc 1 48 3 view .LVU21
-  97 0048 DFF84C80 		ldr	r8, .L3+4
+  97 0048 DFF86080 		ldr	r8, .L3+4
   98 004c 2246     		mov	r2, r4
   99 004e 4FF40051 		mov	r1, #8192
  100 0052 4046     		mov	r0, r8
@@ -160,10 +160,10 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   50:Core/Src/gpio.c ****   /*Configure GPIO pin Output Level */
   51:Core/Src/gpio.c ****   HAL_GPIO_WritePin(GPIOB, HALL_A_Pin|HALL_B_Pin|HALL_C_Pin, GPIO_PIN_RESET);
  103              		.loc 1 51 3 view .LVU22
- 104 0058 104D     		ldr	r5, .L3+8
+ 104 0058 154E     		ldr	r6, .L3+8
  105 005a 2246     		mov	r2, r4
  106 005c A821     		movs	r1, #168
- 107 005e 2846     		mov	r0, r5
+ 107 005e 3046     		mov	r0, r6
  108 0060 FFF7FEFF 		bl	HAL_GPIO_WritePin
  109              	.LVL1:
   52:Core/Src/gpio.c **** 
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
  115              		.loc 1 55 24 is_stmt 0 view .LVU26
  116 006a 0127     		movs	r7, #1
  117 006c 0597     		str	r7, [sp, #20]
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 4
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 4
 
 
   56:Core/Src/gpio.c ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -188,8 +188,8 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   57:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  121              		.loc 1 57 3 is_stmt 1 view .LVU29
  122              		.loc 1 57 25 is_stmt 0 view .LVU30
- 123 0070 0226     		movs	r6, #2
- 124 0072 0796     		str	r6, [sp, #28]
+ 123 0070 0225     		movs	r5, #2
+ 124 0072 0795     		str	r5, [sp, #28]
   58:Core/Src/gpio.c ****   HAL_GPIO_Init(DEBUG_LED_GPIO_Port, &GPIO_InitStruct);
  125              		.loc 1 58 3 is_stmt 1 view .LVU31
  126 0074 04A9     		add	r1, sp, #16
@@ -197,11 +197,11 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
  128 0078 FFF7FEFF 		bl	HAL_GPIO_Init
  129              	.LVL2:
   59:Core/Src/gpio.c **** 
-  60:Core/Src/gpio.c ****   /*Configure GPIO pins : HALL_A_Pin HALL_B_Pin HALL_C_Pin */
-  61:Core/Src/gpio.c ****   GPIO_InitStruct.Pin = HALL_A_Pin|HALL_B_Pin|HALL_C_Pin;
+  60:Core/Src/gpio.c ****   /*Configure GPIO pins : HALL_A_Pin HALL_C_Pin */
+  61:Core/Src/gpio.c ****   GPIO_InitStruct.Pin = HALL_A_Pin|HALL_C_Pin;
  130              		.loc 1 61 3 view .LVU32
  131              		.loc 1 61 23 is_stmt 0 view .LVU33
- 132 007c A823     		movs	r3, #168
+ 132 007c 8823     		movs	r3, #136
  133 007e 0493     		str	r3, [sp, #16]
   62:Core/Src/gpio.c ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
  134              		.loc 1 62 3 is_stmt 1 view .LVU34
@@ -214,46 +214,71 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 1
   64:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
  140              		.loc 1 64 3 is_stmt 1 view .LVU38
  141              		.loc 1 64 25 is_stmt 0 view .LVU39
- 142 0084 0796     		str	r6, [sp, #28]
+ 142 0084 0795     		str	r5, [sp, #28]
   65:Core/Src/gpio.c ****   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
  143              		.loc 1 65 3 is_stmt 1 view .LVU40
  144 0086 04A9     		add	r1, sp, #16
- 145 0088 2846     		mov	r0, r5
+ 145 0088 3046     		mov	r0, r6
  146 008a FFF7FEFF 		bl	HAL_GPIO_Init
  147              	.LVL3:
   66:Core/Src/gpio.c **** 
-  67:Core/Src/gpio.c **** }
- 148              		.loc 1 67 1 is_stmt 0 view .LVU41
- 149 008e 08B0     		add	sp, sp, #32
- 150              	.LCFI2:
- 151              		.cfi_def_cfa_offset 24
- 152              		@ sp needed
- 153 0090 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
- 154              	.L4:
- 155              		.align	2
- 156              	.L3:
- 157 0094 00100240 		.word	1073876992
- 158 0098 00100140 		.word	1073811456
- 159 009c 000C0140 		.word	1073810432
- 160              		.cfi_endproc
- 161              	.LFE65:
- 163              		.text
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 5
+  67:Core/Src/gpio.c ****   /*Configure GPIO pin : HALL_B_Pin */
+  68:Core/Src/gpio.c ****   GPIO_InitStruct.Pin = HALL_B_Pin;
+ 148              		.loc 1 68 3 view .LVU41
+ 149              		.loc 1 68 23 is_stmt 0 view .LVU42
+ 150 008e 2023     		movs	r3, #32
+ 151 0090 0493     		str	r3, [sp, #16]
+  69:Core/Src/gpio.c ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 152              		.loc 1 69 3 is_stmt 1 view .LVU43
+ 153              		.loc 1 69 24 is_stmt 0 view .LVU44
+ 154 0092 0597     		str	r7, [sp, #20]
+  70:Core/Src/gpio.c ****   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+ 155              		.loc 1 70 3 is_stmt 1 view .LVU45
+ 156              		.loc 1 70 24 is_stmt 0 view .LVU46
+ 157 0094 0695     		str	r5, [sp, #24]
+  71:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 158              		.loc 1 71 3 is_stmt 1 view .LVU47
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 5
 
 
- 164              	.Letext0:
- 165              		.file 2 "/Applications/ArmGNUToolchain/13.3.rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
- 166              		.file 3 "/Applications/ArmGNUToolchain/13.3.rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
- 167              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103x6.h"
- 168              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s 			page 6
+ 159              		.loc 1 71 25 is_stmt 0 view .LVU48
+ 160 0096 0795     		str	r5, [sp, #28]
+  72:Core/Src/gpio.c ****   HAL_GPIO_Init(HALL_B_GPIO_Port, &GPIO_InitStruct);
+ 161              		.loc 1 72 3 is_stmt 1 view .LVU49
+ 162 0098 04A9     		add	r1, sp, #16
+ 163 009a 3046     		mov	r0, r6
+ 164 009c FFF7FEFF 		bl	HAL_GPIO_Init
+ 165              	.LVL4:
+  73:Core/Src/gpio.c **** 
+  74:Core/Src/gpio.c **** }
+ 166              		.loc 1 74 1 is_stmt 0 view .LVU50
+ 167 00a0 08B0     		add	sp, sp, #32
+ 168              	.LCFI2:
+ 169              		.cfi_def_cfa_offset 24
+ 170              		@ sp needed
+ 171 00a2 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 172              	.L4:
+ 173 00a6 00BF     		.align	2
+ 174              	.L3:
+ 175 00a8 00100240 		.word	1073876992
+ 176 00ac 00100140 		.word	1073811456
+ 177 00b0 000C0140 		.word	1073810432
+ 178              		.cfi_endproc
+ 179              	.LFE65:
+ 181              		.text
+ 182              	.Letext0:
+ 183              		.file 2 "/Applications/ArmGNUToolchain/13.3.rel1/arm-none-eabi/arm-none-eabi/include/machine/_defa
+ 184              		.file 3 "/Applications/ArmGNUToolchain/13.3.rel1/arm-none-eabi/arm-none-eabi/include/sys/_stdint.h
+ 185              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103x6.h"
+ 186              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h"
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 gpio.c
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s:19     .text.MX_GPIO_Init:00000000 $t
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s:25     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvFgUOF.s:157    .text.MX_GPIO_Init:00000094 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s:19     .text.MX_GPIO_Init:00000000 $t
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s:25     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccACDRAZ.s:175    .text.MX_GPIO_Init:000000a8 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

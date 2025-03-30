@@ -1,4 +1,4 @@
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 1
 
 
    1              		.cpu cortex-m3
@@ -58,7 +58,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
   30:Core/Src/adc.c **** /* ADC1 init function */
   31:Core/Src/adc.c **** void MX_ADC1_Init(void)
   32:Core/Src/adc.c **** {
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 2
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 2
 
 
   27              		.loc 1 32 1 view -0
@@ -118,7 +118,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
   62              		.loc 1 51 3 is_stmt 1 view .LVU13
   63              		.loc 1 51 24 is_stmt 0 view .LVU14
   64 001e 4360     		str	r3, [r0, #4]
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 3
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 3
 
 
   52:Core/Src/adc.c ****   hadc1.Init.NbrOfConversion = 1;
@@ -178,7 +178,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
   99              	.LCFI2:
  100              		.cfi_remember_state
  101              		.cfi_def_cfa_offset 4
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 4
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 4
 
 
  102              		@ sp needed
@@ -238,7 +238,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  147 0004 0023     		movs	r3, #0
  148 0006 0193     		str	r3, [sp, #4]
  149 0008 0293     		str	r3, [sp, #8]
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 5
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 5
 
 
  150 000a 0393     		str	r3, [sp, #12]
@@ -298,7 +298,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  102:Core/Src/adc.c ****   sConfig.Channel = ADC_CHANNEL_6;
  183              		.loc 1 102 3 is_stmt 1 view .LVU53
  184              		.loc 1 102 19 is_stmt 0 view .LVU54
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 6
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 6
 
 
  185 002a 0623     		movs	r3, #6
@@ -358,7 +358,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  226              	.L15:
  227 0054 00000000 		.word	hadc2
  228 0058 00280140 		.word	1073817600
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 7
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 7
 
 
  229              		.cfi_endproc
@@ -415,10 +415,10 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  128:Core/Src/adc.c ****     /**ADC1 GPIO Configuration
  129:Core/Src/adc.c ****     PA5     ------> ADC1_IN5
  130:Core/Src/adc.c ****     */
- 131:Core/Src/adc.c ****     GPIO_InitStruct.Pin = GPIO_PIN_5;
+ 131:Core/Src/adc.c ****     GPIO_InitStruct.Pin = ADC1_IN5_Pin;
  132:Core/Src/adc.c ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 133:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 8
+ 133:Core/Src/adc.c ****     HAL_GPIO_Init(ADC1_IN5_GPIO_Port, &GPIO_InitStruct);
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 8
 
 
  134:Core/Src/adc.c **** 
@@ -445,9 +445,9 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  148:Core/Src/adc.c ****     /**ADC2 GPIO Configuration
  149:Core/Src/adc.c ****     PA6     ------> ADC2_IN6
  150:Core/Src/adc.c ****     */
- 151:Core/Src/adc.c ****     GPIO_InitStruct.Pin = GPIO_PIN_6;
+ 151:Core/Src/adc.c ****     GPIO_InitStruct.Pin = ADC2_IN6_Pin;
  152:Core/Src/adc.c ****     GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
- 153:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 153:Core/Src/adc.c ****     HAL_GPIO_Init(ADC2_IN6_GPIO_Port, &GPIO_InitStruct);
  154:Core/Src/adc.c **** 
  155:Core/Src/adc.c ****   /* USER CODE BEGIN ADC2_MspInit 1 */
  156:Core/Src/adc.c **** 
@@ -478,7 +478,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  293 002a 9A61     		str	r2, [r3, #24]
  125:Core/Src/adc.c **** 
  294              		.loc 1 125 5 view .LVU79
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 9
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 9
 
 
  295 002c 9A69     		ldr	r2, [r3, #24]
@@ -517,9 +517,9 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  318              		.loc 1 131 25 is_stmt 0 view .LVU89
  319 0048 2023     		movs	r3, #32
  320 004a 0493     		str	r3, [sp, #16]
- 132:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 132:Core/Src/adc.c ****     HAL_GPIO_Init(ADC1_IN5_GPIO_Port, &GPIO_InitStruct);
  321              		.loc 1 132 5 is_stmt 1 view .LVU90
- 132:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 132:Core/Src/adc.c ****     HAL_GPIO_Init(ADC1_IN5_GPIO_Port, &GPIO_InitStruct);
  322              		.loc 1 132 26 is_stmt 0 view .LVU91
  323 004c 0323     		movs	r3, #3
  324 004e 0593     		str	r3, [sp, #20]
@@ -538,7 +538,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  145:Core/Src/adc.c **** 
  335              		.loc 1 145 5 is_stmt 1 view .LVU94
  336              	.LBB4:
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 10
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 10
 
 
  145:Core/Src/adc.c **** 
@@ -587,9 +587,9 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  367              		.loc 1 151 25 is_stmt 0 view .LVU107
  368 0080 4023     		movs	r3, #64
  369 0082 0493     		str	r3, [sp, #16]
- 152:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 152:Core/Src/adc.c ****     HAL_GPIO_Init(ADC2_IN6_GPIO_Port, &GPIO_InitStruct);
  370              		.loc 1 152 5 is_stmt 1 view .LVU108
- 152:Core/Src/adc.c ****     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 152:Core/Src/adc.c ****     HAL_GPIO_Init(ADC2_IN6_GPIO_Port, &GPIO_InitStruct);
  371              		.loc 1 152 26 is_stmt 0 view .LVU109
  372 0084 0323     		movs	r3, #3
  373 0086 0593     		str	r3, [sp, #20]
@@ -598,7 +598,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  375 0088 04A9     		add	r1, sp, #16
  376 008a 0548     		ldr	r0, .L23+12
  377              	.LVL14:
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 11
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 11
 
 
  153:Core/Src/adc.c **** 
@@ -657,8 +657,8 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  172:Core/Src/adc.c ****     /**ADC1 GPIO Configuration
  173:Core/Src/adc.c ****     PA5     ------> ADC1_IN5
  174:Core/Src/adc.c ****     */
- 175:Core/Src/adc.c ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5);
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 12
+ 175:Core/Src/adc.c ****     HAL_GPIO_DeInit(ADC1_IN5_GPIO_Port, ADC1_IN5_Pin);
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 12
 
 
  176:Core/Src/adc.c **** 
@@ -684,7 +684,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  189:Core/Src/adc.c ****     /**ADC2 GPIO Configuration
  190:Core/Src/adc.c ****     PA6     ------> ADC2_IN6
  191:Core/Src/adc.c ****     */
- 192:Core/Src/adc.c ****     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_6);
+ 192:Core/Src/adc.c ****     HAL_GPIO_DeInit(ADC2_IN6_GPIO_Port, ADC2_IN6_Pin);
  193:Core/Src/adc.c **** 
  194:Core/Src/adc.c ****   /* USER CODE BEGIN ADC2_MspDeInit 1 */
  195:Core/Src/adc.c **** 
@@ -718,7 +718,7 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  447 0028 02F56842 		add	r2, r2, #59392
  448 002c 9369     		ldr	r3, [r2, #24]
  449 002e 23F48063 		bic	r3, r3, #1024
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 13
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 13
 
 
  450 0032 9361     		str	r3, [r2, #24]
@@ -771,27 +771,27 @@ ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 1
  492              		.file 9 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_adc.h"
  493              		.file 10 "Core/Inc/adc.h"
  494              		.file 11 "Core/Inc/main.h"
-ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s 			page 14
+ARM GAS  /var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s 			page 14
 
 
 DEFINED SYMBOLS
                             *ABS*:00000000 adc.c
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:19     .text.MX_ADC1_Init:00000000 $t
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:25     .text.MX_ADC1_Init:00000000 MX_ADC1_Init
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:120    .text.MX_ADC1_Init:00000054 $d
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:481    .bss.hadc1:00000000 hadc1
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:126    .text.MX_ADC2_Init:00000000 $t
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:132    .text.MX_ADC2_Init:00000000 MX_ADC2_Init
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:227    .text.MX_ADC2_Init:00000054 $d
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:474    .bss.hadc2:00000000 hadc2
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:233    .text.HAL_ADC_MspInit:00000000 $t
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:239    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:386    .text.HAL_ADC_MspInit:00000094 $d
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:394    .text.HAL_ADC_MspDeInit:00000000 $t
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:400    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:463    .text.HAL_ADC_MspDeInit:00000040 $d
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:471    .bss.hadc2:00000000 $d
-/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccGhqmr6.s:478    .bss.hadc1:00000000 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:19     .text.MX_ADC1_Init:00000000 $t
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:25     .text.MX_ADC1_Init:00000000 MX_ADC1_Init
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:120    .text.MX_ADC1_Init:00000054 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:481    .bss.hadc1:00000000 hadc1
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:126    .text.MX_ADC2_Init:00000000 $t
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:132    .text.MX_ADC2_Init:00000000 MX_ADC2_Init
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:227    .text.MX_ADC2_Init:00000054 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:474    .bss.hadc2:00000000 hadc2
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:233    .text.HAL_ADC_MspInit:00000000 $t
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:239    .text.HAL_ADC_MspInit:00000000 HAL_ADC_MspInit
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:386    .text.HAL_ADC_MspInit:00000094 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:394    .text.HAL_ADC_MspDeInit:00000000 $t
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:400    .text.HAL_ADC_MspDeInit:00000000 HAL_ADC_MspDeInit
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:463    .text.HAL_ADC_MspDeInit:00000040 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:471    .bss.hadc2:00000000 $d
+/var/folders/8x/_y6g3dfs0698dfd49y4vcg_w0000gn/T//ccvYy5dp.s:478    .bss.hadc1:00000000 $d
 
 UNDEFINED SYMBOLS
 HAL_ADC_Init
