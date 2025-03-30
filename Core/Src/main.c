@@ -80,10 +80,14 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
-  uint16_t sin_adc;
-  uint16_t cos_adc;
+  uint16_t sin_adc = 0;
+  uint16_t cos_adc = 0;
   float theta_rad;
   int theta_deg; // only for debugging
+  int historical_value = 0; // Initialize historical value for decay and merge
+  int merged_value = 0; // Initialize merged value
+
+
 
   int sin;
   int cos; 
@@ -122,10 +126,11 @@ int main(void)
   while (1) {
     HAL_ADC_Start(&hadc1); // Needs to be called every time
     HAL_ADC_PollForConversion(&hadc1, HAL_MAX_DELAY);
-    cos_adc = HAL_ADC_GetValue(&hadc1);
+    cos_adc = decayAndMerge(cos_adc, HAL_ADC_GetValue(&hadc1)); // Decay and merge the new value with the historical value
+    
     HAL_ADC_Start(&hadc2); // Needs to be called every time
     HAL_ADC_PollForConversion(&hadc2, HAL_MAX_DELAY);
-    sin_adc = HAL_ADC_GetValue(&hadc2);
+    sin_adc = decayAndMerge(sin_adc, HAL_ADC_GetValue(&hadc2)); // Decay and merge the new value with the historical value
 
     // cos_adc = 1000; 
     // sin_adc = 3000; // Test values for debugging
@@ -229,6 +234,21 @@ static float fast_atan(uint16_t ADC_C, uint16_t ADC_S) {
   if (den < 0)
     return M_PI - theta;
   return theta;
+}
+
+int decayAndMerge(int historical_value, int new_value){
+  if(historical_value == 0){
+    historical_value = new_value; // Initialize historical value if it's zero
+  }
+  float decay_rate = 0.9; 
+
+  return (int)(historical_value * (1.0-decay_rate) + new_value * decay_rate);
+
+  // // Decay the historical value by a factor of 0.9
+  // historical_value = (int)(historical_value * 0.9 + new_value * 0.1);
+  // // Merge the new value with the decayed historical value
+  // int merged_value = (int)(historical_value * 0.5 + new_value * 0.5);
+  // return merged_value;
 }
 
 /**
