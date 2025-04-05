@@ -50,6 +50,16 @@
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
 
+// Uncomment the line below to enable debugging 
+// #define DEBUG
+#ifdef DEBUG
+  #define DEBUG_PRINT(...) printf(__VA_ARGS__)
+  #define DEBUG_DELAY(x) HAL_Delay(x)
+#else
+  #define DEBUG_PRINT(...)
+  #define DEBUG_DELAY(x)
+#endif
+
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -63,8 +73,14 @@ void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 static float fast_atan(uint16_t ADC_C, uint16_t ADC_S);
 void HallPositionOutput(int theta_deg);
+void HallPositionOutput_20Pair(int theta_deg);
+void HallPositionOutput_10Pair(int theta_deg);
+int decayAndMerge(int historical_value, int new_value);
+void HallPositionOutput_10Pair_Inverted(theta_deg);
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+
 /* USER CODE END PFP */
+
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -86,8 +102,6 @@ int main(void)
   int theta_deg; // only for debugging
   int historical_value = 0; // Initialize historical value for decay and merge
   int merged_value = 0; // Initialize merged value
-
-
 
   int sin;
   int cos; 
@@ -119,6 +133,11 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
+  // Write each pin initally so that its never all reset. 
+  HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -134,11 +153,10 @@ int main(void)
 
     // cos_adc = 1000; 
     // sin_adc = 3000; // Test values for debugging
-    
-    // theta_rad = fast_atan(cos_adc, sin_adc);
+  
     const float midpoint = (ADC_MAX + ADC_MIN) / 2.0f;
-    float num = cos_adc - midpoint;
-    float den = sin_adc - midpoint;
+    float den = cos_adc - midpoint;
+    float num = sin_adc - midpoint;
     if (den != 0){
       theta_rad = atan2f(num, den); // Use atan2 for better handling of quadrants
     }
@@ -150,19 +168,14 @@ int main(void)
    
     theta_deg = (int)(180.0 / M_PI * theta_rad)+180;
 
-    // if (cos_adc > 180) {
-    //   HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, GPIO_PIN_SET);
-    // } else {
-    //   HAL_GPIO_WritePin(DEBUG_LED_GPIO_Port, DEBUG_LED_Pin, GPIO_PIN_RESET);
-    // }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
     rad = (int)(theta_rad * 1000); // Convert to milliradians
-    printf("ADC_C: %d ADC_S: %d theta_deg: %d rad: %d (millirad)\r\n", cos_adc, sin_adc, theta_deg, rad);
+    DEBUG_PRINT("ADC_C: %d ADC_S: %d theta_deg: %d rad: %d (millirad)\r\n", cos_adc, sin_adc, theta_deg, rad);
 
-    HallPositionOutput_10Pair(theta_deg); // Call the function to output the Hall position
-    HAL_Delay(10); 
+    HallPositionOutput_10Pair_Inverted(theta_deg); // Call the function to output the Hall position
+    DEBUG_DELAY(10); 
     
   
   } 
@@ -216,6 +229,7 @@ void SystemClock_Config(void)
 
 /* USER CODE BEGIN 4 */
 
+// Currently this function is not used.
 static float fast_atan(uint16_t ADC_C, uint16_t ADC_S) {
   const float midpoint = (ADC_MAX + ADC_MIN) / 2.0f;
   float num = ADC_C - midpoint;
@@ -240,19 +254,13 @@ int decayAndMerge(int historical_value, int new_value){
   if(historical_value == 0){
     historical_value = new_value; // Initialize historical value if it's zero
   }
-  float decay_rate = 0.9; 
+  float decay_rate = 0.5; 
 
   return (int)(historical_value * (1.0-decay_rate) + new_value * decay_rate);
-
-  // // Decay the historical value by a factor of 0.9
-  // historical_value = (int)(historical_value * 0.9 + new_value * 0.1);
-  // // Merge the new value with the decayed historical value
-  // int merged_value = (int)(historical_value * 0.5 + new_value * 0.5);
-  // return merged_value;
 }
 
 /**
- * @brief  This function is used to output the Hall position. For a single pole pair? 
+ * @brief  This function is used to output the Hall position. For a single pole pair. 
  * @param  theta_deg: The angle in degrees.
  * @retval None
  * @author Alex
@@ -264,45 +272,45 @@ void HallPositionOutput(theta_deg){
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
 
-    printf("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
   } else if (theta_deg >= 60 && theta_deg < 120){
     //HALL A = 1, HALL_B = 0, HALL_C = 0
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
 
-    printf("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
   } else if (theta_deg >= 120 && theta_deg < 180){
     //HALL A = 1, HALL_B = 1, HALL_C = 0
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
 
-    printf("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_deg >= 180 && theta_deg < 240){
     //HALL A = 0, HALL_B = 1, HALL_C = 0
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
 
-    printf("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_deg >= 240 && theta_deg < 300){
     //HALL A = 0, HALL_B = 1, HALL_C = 1
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
 
-    printf("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
   } else if (theta_deg >= 300 && theta_deg < 360){
     //HALL A = 0, HALL_B = 0, HALL_C = 1
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
 
-    printf("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
   } else {
     // Invalid angle
-    printf("Invalid angle: %d\r\n", theta_deg);
+    DEBUG_PRINT("Invalid angle: %d\r\n", theta_deg);
   }
 
 }
@@ -321,36 +329,80 @@ void HallPositionOutput_10Pair(theta_deg){
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
   } else if (theta_elec >= 6 && theta_elec < 12) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
   } else if (theta_elec >= 12 && theta_elec < 18) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_elec >= 18 && theta_elec < 24) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_elec >= 24 && theta_elec < 30) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
   } else if (theta_elec >= 30 && theta_elec < 36) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
   } else {
-    printf("Invalid angle: %d\r\n", theta_deg);
+    DEBUG_PRINT("Invalid angle: %d\r\n", theta_deg);
   }
 
+}
+
+/**
+ * @brief  This function is used to output the Hall position for a 10-pair motor with inverted GPIO states.
+ * @param  theta_deg: The angle in degrees.
+ * @retval None
+ */
+void HallPositionOutput_10Pair_Inverted(theta_deg){
+  // Normalize the angle to a single electrical cycle (0-36 degrees)
+  int theta_elec = theta_deg % 36;
+
+  if (theta_elec >= 0 && theta_elec < 6) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
+  } else if (theta_elec >= 6 && theta_elec < 12) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
+  } else if (theta_elec >= 12 && theta_elec < 18) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
+    DEBUG_PRINT("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
+  } else if (theta_elec >= 18 && theta_elec < 24) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
+  } else if (theta_elec >= 24 && theta_elec < 30) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
+  } else if (theta_elec >= 30 && theta_elec < 36) {
+    HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
+    HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
+    DEBUG_PRINT("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
+  } else {
+    DEBUG_PRINT("Invalid angle: %d\r\n", theta_deg);
+  }
 }
 
 /**
@@ -367,34 +419,34 @@ void HallPositionOutput_20Pair(theta_deg){
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 1\r\n");
   } else if (theta_elec >= 3 && theta_elec < 6) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 0, HALL C = 0\r\n");
   } else if (theta_elec >= 6 && theta_elec < 9) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 1, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_elec >= 9 && theta_elec < 12) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_RESET);
-    printf("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 0\r\n");
   } else if (theta_elec >= 12 && theta_elec < 15) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_SET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 1, HALL C = 1\r\n");
   } else if (theta_elec >= 15 && theta_elec < 18) {
     HAL_GPIO_WritePin(HALL_A_GPIO_Port, HALL_A_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_B_GPIO_Port, HALL_B_Pin, GPIO_PIN_RESET);
     HAL_GPIO_WritePin(HALL_C_GPIO_Port, HALL_C_Pin, GPIO_PIN_SET);
-    printf("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
+    DEBUG_PRINT("HALL A = 0, HALL B = 0, HALL C = 1\r\n");
   } else {
-    printf("Invalid angle: %d\r\n", theta_deg);
+    DEBUG_PRINT("Invalid angle: %d\r\n", theta_deg);
   }
 
 }
